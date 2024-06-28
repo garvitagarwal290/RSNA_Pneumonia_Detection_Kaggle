@@ -1,11 +1,20 @@
 # Description
 
-This is my implementation of a pneumonia detection model from X-ray scans of lungs. It is based on Kaggle's [RSNA Pneumonia Detection Challenge](https://www.kaggle.com/competitions/rsna-pneumonia-detection-challenge/overview) competition. My implementation is based on the discussions among the winners of the competition [here](https://www.kaggle.com/competitions/rsna-pneumonia-detection-challenge/discussion?sort=hotness).
+This is my implementation of a pneumonia detection model for X-ray scans of the lungs. It is based on Kaggle's [RSNA Pneumonia Detection Challenge](https://www.kaggle.com/competitions/rsna-pneumonia-detection-challenge/overview) competition. My implementation takes inspiration from the discussions among the winners of the competition [here](https://www.kaggle.com/competitions/rsna-pneumonia-detection-challenge/discussion?sort=hotness).
 
 # Details
 
 1) I used this [Retinanet detection model](https://github.com/yhenon/pytorch-retinanet) implementation to start with.
-2) 
+
+modifications: augmentation, ensemble
+
+dropout
+
+image size
+
+detection parameters: all thresholds
+
+
 
 
 
