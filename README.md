@@ -4,7 +4,7 @@ This is my implementation of a pneumonia detection model for X-ray scans of the 
 
 # Details
 
-1) I used this [Retinanet detection model](https://github.com/yhenon/pytorch-retinanet) implementation to start with.
+1) I used this [Retinanet detection model](https://github.com/yhenon/pytorch-retinanet) PyTorch implementation to start with.
 
 modifications: augmentation, ensemble
 
@@ -14,6 +14,18 @@ image size
 
 detection parameters: all thresholds
 
+other details: batchsize, optimiser, 
+
+
+(put create_csv code, training and prediction code in separate files to be run as separate commands and not in notebook)
+## Training
+(create csv)
+(run training)
+
+
+## Prediction
+(create csv)
+(run prediction)
 
 
 
