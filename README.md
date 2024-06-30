@@ -6,28 +6,35 @@ This is my implementation of a pneumonia detection model for X-ray scans of the 
 
 1) I used this [Retinanet detection model](https://github.com/yhenon/pytorch-retinanet) PyTorch implementation to start with.
 
-modifications: augmentation, ensemble
+2) modifications: augmentation, ensemble, dropout in classification
 
-dropout
+3) Training details: batchsize, optimiser, image size, number of epochs
 
-image size
-
-detection parameters: all thresholds
-
-other details: batchsize, optimiser, 
+4) Inference details: detection thresholds
 
 
 (put create_csv code, training and prediction code in separate files to be run as separate commands and not in notebook)
 ## Training
-(create csv)
-(run training)
+
+1) Create csv annotation file. Use the command: > python create_trainingcsv.py
+
+2) Start training with command: > python train.py --csv_train train_annots.csv --csv_classes class_list.csv  --csv_val val_annots.csv --epochs 4 --batchsize 32
+
+The trained models will be saved in the current directory.
 
 
 ## Prediction
-(create csv)
-(run prediction)
+
+1) Create csv annotation file. Use the command: > python create_inferencecsv.py
+
+2) Start training with command: > python csv_prediction.py --csv_classes class_list.csv --csv_test test_annots.csv --model model_final.pt --num_images_topredict 3000 --score_threshold 0.05
+
+The csv file containing the predictions will be created in the current directory.
 
 
+## Visualise
+
+You can visualize the model's output by running: > python visualize.py --csv_classes class_list.csv --csv_val test_annots.csv --model model_final.pt --score_threshold 0.05
 
 
 Taking the option with the highest score as the model's `answer', the above model answered only 63 questions correctly out of 200. This accuracy is not significantly more than a model that chooses an option randomly out of the 5 options. The sub-par performance might be due to the following reasons:
