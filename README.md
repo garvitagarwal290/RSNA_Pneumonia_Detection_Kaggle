@@ -27,16 +27,19 @@ The trained models will be saved in the current directory.
 
 ## Prediction
 
-1) Create csv annotation file. Use the command: > python create_inferencecsv.py
+1) Create csv annotation file. Use the command:
+   > python create_inferencecsv.py
 
-2) Start training with command: > python csv_prediction.py --csv_classes class_list.csv --csv_test test_annots.csv --model model_final.pt --num_images_topredict 3000 --score_threshold 0.05
+3) Start training with command:
+   > python csv_prediction.py --csv_classes class_list.csv --csv_test test_annots.csv --model model_final.pt --num_images_topredict 3000 --score_threshold 0.05
 
 The csv file containing the predictions will be created in the current directory.
 
 
 ## Visualise
 
-You can visualize the model's output by running: > python visualize.py --csv_classes class_list.csv --csv_val test_annots.csv --model model_final.pt --score_threshold 0.05
+You can visualize the model's output by running: 
+   > python visualize.py --csv_classes class_list.csv --csv_val test_annots.csv --model model_final.pt --score_threshold 0.05
 
 
 Taking the option with the highest score as the model's `answer', the above model answered only 63 questions correctly out of 200. This accuracy is not significantly more than a model that chooses an option randomly out of the 5 options. The sub-par performance might be due to the following reasons:
