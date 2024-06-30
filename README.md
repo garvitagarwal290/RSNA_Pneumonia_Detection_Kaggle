@@ -16,9 +16,11 @@ This is my implementation of a pneumonia detection model for X-ray scans of the 
 (put create_csv code, training and prediction code in separate files to be run as separate commands and not in notebook)
 ## Training
 
-1) Create csv annotation file. Use the command: > python create_trainingcsv.py
+1) Create csv annotation file. Use the command:
+   > python create_trainingcsv.py
 
-2) Start training with command: > python train.py --csv_train train_annots.csv --csv_classes class_list.csv  --csv_val val_annots.csv --epochs 4 --batchsize 32
+3) Start training with command:
+   > python train.py --csv_train train_annots.csv --csv_classes class_list.csv  --csv_val val_annots.csv --epochs 4 --batchsize 32
 
 The trained models will be saved in the current directory.
 
