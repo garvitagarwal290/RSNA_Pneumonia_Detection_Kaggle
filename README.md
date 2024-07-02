@@ -4,12 +4,12 @@ This is my implementation of a pneumonia detection model for X-ray scans of the 
 
 # Details
 
-1) I used this [Retinanet detection model](https://github.com/yhenon/pytorch-retinanet) PyTorch implementation to start with.
+1) To start with the PyTorch implementation of the [Retinanet detection model](https://github.com/yhenon/pytorch-retinanet) was used.
 
-2) I made the following major modifications to the code:
-   1) **Training Data Transformations**: The original code had only the random horizontal flip transformation for the input images. I added rotation, translation, scaling, and shear transformations. 
-   2) **Ensemble Model**: I modified the code to train an ensemble of 3 models using scikit-learn's StratifiedKFold
-   3) **Regularization**: To mitigate overfitting in the detection, I added dropout in the classification part of the network.
+2) The following major modifications were made to the code:
+   1) **Training Data Transformations**: The original code had only the random horizontal flip transformation for the input images. Transformations like rotation, translation, scaling, and shear were added. 
+   2) **Ensemble Model**: The code was modified to train an ensemble of 3 models using scikit-learn's StratifiedKFold
+   3) **Regularization**: To mitigate overfitting in the detection, dropout was added in the classification part of the network.
 
 4) Training details:
    1) Batchsize: 200
@@ -20,7 +20,8 @@ This is my implementation of a pneumonia detection model for X-ray scans of the 
 6) Inference details:
    1) Classification score threshold (to decide whether an anchor box is a detection): 0.05
    2) Non-maximum suppression (NMS) IOU threshold: 0.1
-   3) For ensembling, I defined an IoU threshold of 0.5 at which boxes detected by different models were merged (by taking a weighted average of their coordinates). For bounding boxes that did not overlap between the models, I used a classification threshold value of 0.065 to decide whether the solitary box should be retained.
+   3) For ensembling, an IoU threshold of 0.5 was used at which boxes detected by different models were merged (by taking a weighted average of their coordinates). For bounding boxes that did not overlap between the models, a classification threshold value of 0.065 was used to decide whether the solitary box should be retained.
+   4) For reasons explained further below, the true detections in the test images were systematically smaller than the ones in the training images. So after computing the detection boxes from the ensemble, every box was resized to 87.5% of its size. 
 
 
 (put create_csv code, training and prediction code in separate files to be run as separate commands and not in notebook)
@@ -54,10 +55,9 @@ You can visualize the model's output by running:
 
 ## Results
 
+Kaggle provided a test set of 3000 images with the correct outputs hidden. Based on the model's submitted predictions on the test images, Kaggle computes the Average Precision (AP), averaged for IOU thresholds ranging from 0.4 to 0.75. The Mean Average Precision (MAP) for our final ensemble model was <number>. 
 
-
-
-Taking the option with the highest score as the model's `answer', the above model answered only 63 questions correctly out of 200. This accuracy is not significantly more than a model that chooses an option randomly out of the 5 options. The sub-par performance might be due to the following reasons:
+This score is not particularly high but so are the scores of the top scorers of the competition. The sub-par performance might be due to the following reasons:
 
 1) **_Limited GPU resources:_** All the above steps were implemented on Kaggle and so were subjected to the GPU memory and time limitations. This limited the size of the answering/reader model.
 2) **_Limited context length:_** The maximum context length of our reader model was 512 tokens. This is likely not enough to accommodate many long Wikipedia articles which are hence truncated. The truncation might result in the loss of essential context required to answer the question. Hence an encoder model with a larger context length should perform better, however, at the same time, the limited GPU memory might cause a roadblock.
