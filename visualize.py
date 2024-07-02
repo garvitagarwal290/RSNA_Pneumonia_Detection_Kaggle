@@ -12,7 +12,7 @@ import cv2
 
 import torch
 from torch.utils.data import Dataset, DataLoader
-from torchvision import datasets, models
+from torchvision import datasets, models, transforms
 from torchvision.transforms import v2
 
 from retinanet.dataloader import CocoDataset, CSVDataset, collater, Resizer, AspectRatioBasedSampler, Augmenter, \
@@ -39,8 +39,6 @@ def draw_caption(image, box, caption):
 def main(args=None):
 	parser = argparse.ArgumentParser(description='Simple training script for training a RetinaNet network.')
 
-	parser.add_argument('--dataset', help='Dataset type, must be one of csv or coco.')
-	parser.add_argument('--coco_path', help='Path to COCO directory')
 	parser.add_argument('--csv_classes', help='Path to file containing class list (see readme)')
 	parser.add_argument('--csv_val', help='Path to file containing validation annotations (optional, see readme)')
 
@@ -50,15 +48,9 @@ def main(args=None):
 
 	parser = parser.parse_args(args)
 
-	if parser.dataset == 'coco':
-		dataset_val = CocoDataset(parser.coco_path, set_name='train2017', transform=transforms.Compose([Normalizer(), Resizer()]))
-	elif parser.dataset == 'csv':
-		dataset_val = CSVDataset(train_file=parser.csv_val, class_list=parser.csv_classes, transform=transforms.Compose([v2.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]), Resizer()]))
-		#dataset_val = CSVDataset(train_file=parser.csv_val, class_list=parser.csv_classes, transform=transforms.Compose([Normalizer(), Resizer()]))
-	else:
-		raise ValueError('Dataset type not understood (must be csv or coco), exiting.')
+	dataset_val = CSVDataset(train_file=parser.csv_val, class_list=parser.csv_classes, transform=transforms.Compose([v2.Normalize(mean=[0.49, 0.49, 0.49], std=[0.229, 0.229, 0.229]), v2.Resize(256, antialias=True)]))
 
-	sampler_val = AspectRatioBasedSampler(dataset_val, batch_size=1, drop_last=False, randomise=False)
+	sampler_val = AspectRatioBasedSampler(dataset_val, [i for i in range(len(dataset_val))], batch_size=1, drop_last=False, randomise=False)
 	dataloader_val = DataLoader(dataset_val, num_workers=1, collate_fn=collater, batch_sampler=sampler_val)
 
 	if use_gpu and torch.cuda.is_available():
@@ -97,7 +89,7 @@ def main(args=None):
 
 			img = cv2.cvtColor(img.astype(np.uint8), cv2.COLOR_BGR2RGB)
 
-			print(dataset_val.image_names[idx].split('/')[-1])
+			#print(dataset_val.image_names[idx].split('/')[-1])
 			for j in range(idxs[0].shape[0]):
 				bbox = transformed_anchors[idxs[0][j], :]
 				x1 = int(bbox[0])
@@ -105,11 +97,10 @@ def main(args=None):
 				x2 = int(bbox[2])
 				y2 = int(bbox[3])
 				label_name = dataset_val.labels[int(classification[idxs[0][j]])]
-				print(x1,y1,x2,y2, label_name)
+				#print(x1,y1,x2,y2, label_name)
 				draw_caption(img, (x1, y1, x2, y2), label_name)
 
 				cv2.rectangle(img, (x1, y1), (x2, y2), color=(255, 0, 0), thickness=2)
-				#print(label_name)
 
 			plt.imshow(img, interpolation = 'bicubic')
 			plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
