@@ -7,20 +7,20 @@ This is my implementation of a pneumonia detection model for X-ray scans of the 
 1) I used this [Retinanet detection model](https://github.com/yhenon/pytorch-retinanet) PyTorch implementation to start with.
 
 2) I made the following major modifications to the code:
-   a) **Training Data Transformations**: The original code had only the random horizontal flip transformation for the input images. I added rotation, translation, scaling, and shear transformations. 
-   b) **Ensemble Model**: I modified the code to train an ensemble of 3 models using scikit-learn's StratifiedKFold
-   c) **Regularization**: To mitigate overfitting in the detection, I added dropout in the classification part of the network.
+   1) **Training Data Transformations**: The original code had only the random horizontal flip transformation for the input images. I added rotation, translation, scaling, and shear transformations. 
+   2) **Ensemble Model**: I modified the code to train an ensemble of 3 models using scikit-learn's StratifiedKFold
+   3) **Regularization**: To mitigate overfitting in the detection, I added dropout in the classification part of the network.
 
 4) Training details:
-   a) Batchsize: 200
-   b) Image size: 256
-   c) Number of epochs: 13
-   d) Optimiser: Adam, LR 1e-5 
+   1) Batchsize: 200
+   2) Image size: 256
+   3) Number of epochs: 13
+   4) Optimiser: Adam, LR 1e-5 
 
 6) Inference details:
-   a) Classification score threshold (to decide whether an anchor box is a detection): 0.05
-   b) Non-maximum suppression (NMS) IOU threshold: 0.1
-   c) For ensembling, I defined an IoU threshold of 0.5 at which boxes detected by different models were merged (by taking a weighted average of their coordinates). For bounding boxes that did not overlap between the models, I used a classification threshold value of 0.065 to decide whether the solitary box should be retained.
+   1) Classification score threshold (to decide whether an anchor box is a detection): 0.05
+   2) Non-maximum suppression (NMS) IOU threshold: 0.1
+   3) For ensembling, I defined an IoU threshold of 0.5 at which boxes detected by different models were merged (by taking a weighted average of their coordinates). For bounding boxes that did not overlap between the models, I used a classification threshold value of 0.065 to decide whether the solitary box should be retained.
 
 
 (put create_csv code, training and prediction code in separate files to be run as separate commands and not in notebook)
