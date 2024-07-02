@@ -24,7 +24,6 @@ This is my implementation of a pneumonia detection model for X-ray scans of the 
    4) For reasons explained further below, the true detections in the test images were systematically smaller than the ones in the training images. So after computing the detection boxes from the ensemble, every box was resized to 87.5% of its size. 
 
 
-(put create_csv code, training and prediction code in separate files to be run as separate commands and not in notebook)
 ## Training
 
 1) Create csv annotation file. Use the command:
