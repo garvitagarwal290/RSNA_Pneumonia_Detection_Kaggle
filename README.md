@@ -44,7 +44,7 @@ The trained models will be saved in the current directory.
 3) Start training with command:
    > python csv_prediction.py --csv_classes class_list.csv --csv_test test_annots.csv --model_epoch 13 --num_images_topredict 3000 --score_threshold 0.05
 
-The csv file containing the predictions will be created in the current directory.
+The CSV file containing the predictions will be created in the current directory.
 
 
 ## Visualise
@@ -57,7 +57,6 @@ You can visualize the model's output by running:
 
 Kaggle provided a test set of 3000 images with the correct outputs hidden. Based on the model's submitted predictions on the test images, Kaggle computes the Average Precision (AP), averaged for IOU thresholds ranging from 0.4 to 0.75. The Mean Average Precision (MAP) for our final ensemble model was <number>. 
 
-This score is not particularly high but neither are the scores of the top scorers of the competition. A major issue is that 
+This score is not particularly high but neither are the scores of the top scorers of the competition. A major issue is that the distribution of positive/negative images is different in the training set and the test set. In general, the statistics of the 2 datasets seem to be different (see [Inconsistencies between train dataset and test dataset](https://www.kaggle.com/competitions/rsna-pneumonia-detection-challenge/discussion/66323)). This is possibly because the method used for manually annotating the images is different for the 2 datasets as explained [here](https://www.kaggle.com/c/rsna-pneumonia-detection-challenge/discussion/64723). This essentially led to the annotations in the test dataset being systematically smaller and more in frequency as compared to the training set. When there is such a difference between the training and test dataset, a model trained well might not perform well on the test data and one is left to do trial-and-error with different parameters in hopes of getting better test score.
 
-To conclude, more work is required to build a more accurate RAG-based MCQ answering model.
 
