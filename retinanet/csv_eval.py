@@ -98,10 +98,6 @@ def _get_detections(dataset, ids, retinanet, score_threshold=0.05, max_detection
             boxes  = boxes.cpu().numpy()
 
             # correct boxes for image scale
-            #print(boxes)
-            #boxes = tv_tensors.BoundingBoxes(boxes, format=tv_tensors.BoundingBoxFormat.XYXY, canvas_size=data['img'][0].shape[-2:])
-            #print(boxes)
-            #boxes = v2.Resize((1024))(boxes) 
             boxes *= (1024/data['img'].shape[-1])
 
             # select indices which have a score above the threshold
@@ -127,7 +123,7 @@ def _get_detections(dataset, ids, retinanet, score_threshold=0.05, max_detection
                 for label in range(dataset.num_classes()):
                     all_detections[index][label] = np.zeros((0, 5))
 
-            #print('{}/{}'.format(index + 1, len(ids)), end='\r')
+            print('{}/{}'.format(index + 1, len(ids)), end='\r')
 
     return all_detections
 
@@ -151,7 +147,7 @@ def _get_annotations(generator, ids):
         for label in range(generator.num_classes()):
             all_annotations[i][label] = annotations[labels[:, 0] == label, :4].copy()
 
-        #print('{}/{}'.format(i + 1, len(ids)), end='\r')
+        print('{}/{}'.format(i + 1, len(ids)), end='\r')
 
     return all_annotations
 

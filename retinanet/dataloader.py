@@ -464,7 +464,6 @@ class AspectRatioBasedSampler(Sampler):
         self.batch_size = batch_size
         self.drop_last = drop_last
         self.groups = self.group_images(ids)
-        #print(self.groups)
         self.randomise = randomise
 
     def __iter__(self):
@@ -474,9 +473,9 @@ class AspectRatioBasedSampler(Sampler):
 
     def __len__(self):
         if self.drop_last:
-            return len(self.data_source) // self.batch_size
+            return len(ids) // self.batch_size
         else:
-            return (len(self.data_source) + self.batch_size - 1) // self.batch_size
+            return (len(ids) + self.batch_size - 1) // self.batch_size
 
     def group_images(self, ids):
         # determine the order of the images

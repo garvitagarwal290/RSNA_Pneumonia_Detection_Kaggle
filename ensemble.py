@@ -29,7 +29,7 @@ Input:
 Output:
     A list of boxes, on the same format as the input. Confidences are in range 0-1.
 """
-def GeneralEnsemble(dets, iou_thresh = 0.1, singlebox_scorethresh = 0.065, weights=None):
+def GeneralEnsemble(dets, iou_thresh = 0.1, singlebox_scorethresh = 0.1, weights=None):
     assert(type(iou_thresh) == float)
     
     ndets = len(dets)
@@ -124,8 +124,8 @@ def getCoords(box):
     return x1, x2, y1, y2
     
 def computeIOU(box1, box2):
-    x11, x12, y11, y12 = box1[:4] #getCoords(box1)
-    x21, x22, y21, y22 = box2[:4] #getCoords(box2)
+    x11, y11, x12, y12 = box1[:4] #getCoords(box1)
+    x21, y21, x22, y22 = box2[:4] #getCoords(box2)
     
     x_left   = max(x11, x21)
     y_top    = max(y11, y21)

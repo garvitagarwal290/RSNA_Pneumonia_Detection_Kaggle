@@ -21,7 +21,7 @@ train_annots['x2'] = pd.to_numeric(train_annots['x2'], errors='coerce').astype('
 train_annots['y1'] = pd.to_numeric(train_annots['y1'], errors='coerce').astype('Int64')
 train_annots['y2'] = pd.to_numeric(train_annots['y2'], errors='coerce').astype('Int64')
 
-train_annots.to_csv('annots_file.csv', header=False, index=False)
+train_annots[:100].to_csv('annots_file.csv', header=False, index=False)
 
 #create csv file for object classes
 classes = pd.DataFrame({"class_name":["Lung_Opacity"], "id":[0]})
